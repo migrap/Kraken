@@ -9,6 +9,9 @@ namespace Sandbox {
     class Program {
         static void Main(string[] args) {
             var kracken = new KrakenClient();
+
+            var assets = kracken.GetAssetsAsync(x => { }).Result;
+
             var result = kracken.GetTickerAsync(x => x
                 .Symbol("LTCXRP")
             ).Result;

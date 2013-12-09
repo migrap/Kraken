@@ -25,6 +25,24 @@ namespace Kraken {
             };
         }
 
+        public Task<Assets> GetAssetsAsync(Action<IAssetPairsConfigurator> configure) {
+            var c = new AssetsConfigurator();
+            configure(c);
+
+            var parameters = c.Build();
+
+            var query = parameters.ToQueryString();
+            var uri = "{0}AssetPairs{1}{2}".FormatWith(_public.BaseAddress, (parameters.Count == 0) ? "" : "?", query);
+
+            var request = new HttpRequestMessage {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(uri)
+            };
+
+            return _public.SendAsync(request)
+                .ReadAsAsync<Assets>(new KrakenMediaTypeFormatter());
+        }
+
         public Task<string> GetTradesAsync(Action<ITradesConfigurator> configure) {
             var c = new TradesConfigurator();
             configure(c);

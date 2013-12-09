@@ -56,16 +56,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configurators\AssetsConfigurator.cs" />
     <Compile Include="Configurators\TickerConfigurator.cs" />
     <Compile Include="Configurators\TradesConfigurator.cs" />
+    <Compile Include="Converters\AssetsConverters.cs" />
+    <Compile Include="Converters\FeesConverter.cs" />
     <Compile Include="Converters\TickerConverter.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="KrakenClient.cs" />
+    <Compile Include="Models\Asset.cs" />
+    <Compile Include="Models\Assets.cs" />
+    <Compile Include="Models\Fee.cs" />
+    <Compile Include="Models\Fees.cs" />
     <Compile Include="Models\Ticker.cs" />
     <Compile Include="Models\Trade.cs" />
     <Compile Include="Models\Trades.cs" />
     <Compile Include="Net\Http\Formatting\KrakenMediaTypeFormatter.cs" />
     <Compile Include="Parameters.cs" />
+    <Compile Include="Percentage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -12,6 +12,18 @@ using System.Threading.Tasks;
 
 namespace Kraken.Net.Http.Formatting {
     internal class KrakenMediaTypeFormatter : JsonMediaTypeFormatter {
+        private static readonly Lazy<JsonSerializer> _serializer = new Lazy<JsonSerializer>(() => {
+            var serializer = new JsonSerializer();
+            serializer.Converters.Add(new TickerConverter());
+            serializer.Converters.Add(new AssetsConverters());
+            serializer.Converters.Add(new FeesConverter());
+            return serializer;
+        });
+
+        public static JsonSerializer Serializer {
+            get { return _serializer.Value; }
+        }
+
         public KrakenMediaTypeFormatter() {            
         }
 
@@ -21,8 +33,8 @@ namespace Kraken.Net.Http.Formatting {
 
         public override Task<object> ReadFromStreamAsync(Type type, Stream stream, HttpContent content, IFormatterLogger logger) {
             var jobject = JObject.Parse(new StreamReader(stream).ReadToEnd());
-            var serializer = new JsonSerializer();
-            serializer.Converters.Add(new TickerConverter());
+            var serializer = Serializer;
+            
             var tcs = new TaskCompletionSource<object>();
 
             var instance = serializer.Deserialize(jobject["result"].CreateReader(), type);
