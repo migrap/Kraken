@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kraken.Net.Http.Configurators;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -72,6 +73,25 @@ namespace Kraken {
             response.EnsureSuccessStatusCode();
 
             return response.Content.ReadAsStringAsync();
+        }
+
+        internal static Task<HttpResponseMessage> SendAsync(this HttpClient client, Action<IHttpRequestMessageConfigurator> configure) {
+            var c = new HttpRequestMessageConfigurator();
+            configure(c);
+
+            return client.SendAsync(c.Build());
+        }
+ 
+        internal static IHttpRequestMessageConfigurator Parameters(this IHttpRequestMessageConfigurator self, Parameters value) {
+            foreach(var item in value) {
+                self.Parameters(item.Key, item.Value);
+            }
+            return self;
+        }
+
+        internal static IHttpRequestMessageConfigurator Address(this IHttpRequestMessageConfigurator self, Uri value) {
+            self.Address(value.ToString());
+            return self;
         }
     }
 }

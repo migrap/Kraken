@@ -13,7 +13,7 @@ namespace Kraken {
     public class KrakenClient {         
 
         private HttpClient _public;
-        private HttpClient _secure;
+        //private HttpClient _secure;
 
         static KrakenClient() {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, error) => true;
@@ -28,57 +28,43 @@ namespace Kraken {
         public Task<Assets> GetAssetsAsync(Action<IAssetPairsConfigurator> configure) {
             var c = new AssetsConfigurator();
             configure(c);
-
             var parameters = c.Build();
 
-            var query = parameters.ToQueryString();
-            var uri = "{0}AssetPairs{1}{2}".FormatWith(_public.BaseAddress, (parameters.Count == 0) ? "" : "?", query);
-
-            var request = new HttpRequestMessage {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(uri)
-            };
-
-            return _public.SendAsync(request)
+            return _public.SendAsync(HttpMethod.Get, _public.BaseAddress, "AssetPairs", parameters)
                 .ReadAsAsync<Assets>(new KrakenMediaTypeFormatter());
         }
 
         public Task<string> GetTradesAsync(Action<ITradesConfigurator> configure) {
             var c = new TradesConfigurator();
             configure(c);
-
             var parameters = c.Build();
 
-            var query = parameters.ToQueryString();
-
-            var uri = "{0}Trades?{1}".FormatWith(_public.BaseAddress, query);            
-
-            var request = new HttpRequestMessage {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(uri)
-            };
-
-            return _public.SendAsync(request)                
+            return _public.SendAsync(HttpMethod.Get, _public.BaseAddress, "Trades", parameters)
                 .ReadAsStringAsync();
         }
 
         public Task<Ticker> GetTickerAsync(Action<ITickerConfigurator> configure) {
             var c = new TickerConfigurator();
             configure(c);
-
             var parameters = c.Build();
 
-            var query = parameters.ToQueryString();
-
-            var uri = "{0}Ticker?{1}".FormatWith(_public.BaseAddress, query);
-
-            var request = new HttpRequestMessage {
-                Method = HttpMethod.Get,
-                RequestUri = new Uri(uri)
-            };
-
-            return _public.SendAsync(request)
+            return _public.SendAsync(HttpMethod.Get, _public.BaseAddress, "Ticker", parameters)
                 .ReadAsAsync<Ticker>(new KrakenMediaTypeFormatter());
+        }
+    }
+
+    public static partial class Extensions {
+        public static Task<Assets> GetAssetsAsync(this KrakenClient client) {
+            return client.GetAssetsAsync(x => { });
+        }
+
+        internal static Task<HttpResponseMessage> SendAsync(this HttpClient client, HttpMethod method, Uri address, string resource, Parameters parameters) {
+            return client.SendAsync(x => x
+                .Resource(resource)
+                .Method(method)
+                .Address(address)
+                .Parameters(parameters)
+            );
         }
     }
 }

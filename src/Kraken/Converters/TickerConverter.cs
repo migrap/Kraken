@@ -41,16 +41,16 @@ namespace Kraken.Converters {
             throw new NotImplementedException();
         }
 
-        class _ {
-            public string[] a;
-            public string[] b;
-            public string[] c;
-            public string[] v;
-            public string[] p;
-            public int[] t;
-            public string[] l;
-            public string[] h;
-            public string o;
+        private class _ {
+            public string[] a { get; set; }
+            public string[] b { get; set; }
+            public string[] c { get; set; }
+            public string[] v { get; set; }
+            public string[] p { get; set; }
+            public int[] t { get; set; }
+            public string[] l { get; set; }
+            public string[] h { get; set; }
+            public string o { get; set; }
         }
     }
 

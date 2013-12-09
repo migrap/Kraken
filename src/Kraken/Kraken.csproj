@@ -71,6 +71,7 @@
     <Compile Include="Models\Ticker.cs" />
     <Compile Include="Models\Trade.cs" />
     <Compile Include="Models\Trades.cs" />
+    <Compile Include="Net\Http\Configurators\HttpRequestMessageConfigurator.cs" />
     <Compile Include="Net\Http\Formatting\KrakenMediaTypeFormatter.cs" />
     <Compile Include="Parameters.cs" />
     <Compile Include="Percentage.cs" />
