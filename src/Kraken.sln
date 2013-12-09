@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4768BD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kraken", "Kraken\Kraken.csproj", "{88994227-2080-4AC5-96EF-7E32319C4D1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{605AED08-29B7-45F5-902F-50951A00CD7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,11 +26,16 @@ Global
 		{88994227-2080-4AC5-96EF-7E32319C4D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88994227-2080-4AC5-96EF-7E32319C4D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88994227-2080-4AC5-96EF-7E32319C4D1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{605AED08-29B7-45F5-902F-50951A00CD7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{605AED08-29B7-45F5-902F-50951A00CD7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{605AED08-29B7-45F5-902F-50951A00CD7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{605AED08-29B7-45F5-902F-50951A00CD7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{88994227-2080-4AC5-96EF-7E32319C4D1C} = {D6AA7BF2-2C92-42EE-988C-9EA22EA65627}
+		{605AED08-29B7-45F5-902F-50951A00CD7B} = {D6AA7BF2-2C92-42EE-988C-9EA22EA65627}
 	EndGlobalSection
 EndGlobal
