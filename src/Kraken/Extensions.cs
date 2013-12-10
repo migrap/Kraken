@@ -1,4 +1,5 @@
 ﻿using Kraken.Net.Http.Configurators;
+using Kraken.Reactive.Configurators;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Kraken {
@@ -65,6 +67,10 @@ namespace Kraken {
             return response.Content.ReadAsAsync<T>(formatters);
         }
 
+        internal static Task<T> ReadAsAsync<T>(this HttpResponseMessage message, params MediaTypeFormatter[] formatters) {
+            return message.Content.ReadAsAsync<T>(formatters);
+        }
+
         internal static Task<string> ReadAsStringAsync(this Task<HttpResponseMessage> message) {
             var response = message
                 .ConfigureAwait(false)
@@ -90,8 +96,20 @@ namespace Kraken {
         }
 
         internal static IHttpRequestMessageConfigurator Address(this IHttpRequestMessageConfigurator self, Uri value) {
-            self.Address(value.ToString());
-            return self;
+            return self.Address(value.ToString());            
+        }
+
+        internal static IObservableHttpRequestMessageConfigurator Address(this IObservableHttpRequestMessageConfigurator self, Uri value) {
+            return self.Address(value.ToString());            
+        }
+
+        public static void ContinueOrCancel(this CancellationTokenSource self) {
+            self.Token.ContinueOrCancel();
+        }
+        public static void ContinueOrCancel(this CancellationToken self) {
+            if(self.IsCancellationRequested) {
+                self.ThrowIfCancellationRequested();
+            }
         }
     }
 }
