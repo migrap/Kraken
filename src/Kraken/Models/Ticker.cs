@@ -24,10 +24,18 @@ namespace Kraken.Models {
         public double High { get; set; }
 
         public double Low { get; set; }
-    }
 
-    public struct Value {
-        public double Price { get; set; }
-        public double Amount { get; set; }
+        public override string ToString() {
+            return (new { Bid, Ask, Last, Open, High, Low, Volume, Vwap, Trades }).ToString();
+        }
+
+        public struct Value {
+            public double Price { get; set; }
+            public double Amount { get; set; }
+
+            public override string ToString() {
+                return (new { Price, Amount }).ToString();
+            }
+        }
     }
 }

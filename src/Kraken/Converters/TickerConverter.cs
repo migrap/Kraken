@@ -55,8 +55,8 @@ namespace Kraken.Converters {
     }
 
     public static partial class Extensions {
-        internal static Value ToValue(this string[] self) {
-            return new Value {
+        internal static Ticker.Value ToValue(this string[] self) {
+            return new Ticker.Value {
                 Price = self[0].ToDouble(),
                 Amount = self[1].ToDouble()
             };
